@@ -1,0 +1,62 @@
+.speedometer-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-left: 300px;
+  margin-top: 300px;
+  width: auto;
+}
+
+.marking {
+  position: absolute;
+  border: 2px solid black;
+  width: 20px;
+  height: 0;
+  transform-origin: left;
+}
+
+body {
+  font-size: 30pt;
+}
+
+.half-circle {
+  display: inline-block;
+  width: 600px;
+  height: 300px; /* as the half of the width */
+  border-top-left-radius: 304px;  /* 100px of height + 10px of border */
+  border-top-right-radius: 304px; /* 100px of height + 10px of border */
+  border: 4px solid black;
+  border-bottom: 0;
+  position: relative;
+}
+
+button {
+  width: 200px;
+  height: 250px;
+  font-size: 30pt;
+  margin-left: 50px;
+}
+
+#pointer-line {
+  position: absolute;
+  top: 296px;
+  left: 30px;
+  width: 270px;
+  height: 0px;
+  border: 2px solid black;
+  transform-origin: right;
+  transform: rotate(0deg);
+}
+
+.label-wrapper {
+  width: 100%;
+  text-align: center;
+}
+.label {
+  display: inline-block;
+}
+#left-label {
+  float: left;
+}
+#right-label {
+  float: right;
+}

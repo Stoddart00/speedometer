@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="speedometer-wrapper">
+      <div class="label-wrapper">
+        <span id="center-label" class="label">50</span>
+      </div>
+      <div class="half-circle">
+        <div class="marking" style="bottom: 0; left: 0; transform: rotate(0deg);"></div>
+        <div class="marking" style="bottom: 0; right: 0; transform: rotate(0deg);"></div>
+        <div class="marking" style="top: -5px; left: 300px; transform: rotate(90deg);"></div>
+        <div class="marking" style="top: 86px; left: 86px; transform: rotate(45deg);"></div>
+        <div class="marking" style="top: 86px; left: 516px; transform: rotate(135deg);"></div>
+        <div id="pointer-line">
+
+        </div>
+      </div>
+      <div class="label-wrapper">
+        <span id="left-label" class="label">0</span>
+        <span id="right-label" class="label">100</span>
+        mph
+      </div>
+    </div>
+    <button type="button" name="button" onmousedown="acceleratorDown()">Accelerate</button>
+    <button type="button" name="button" onmousedown="brakeDown()">Brake</button>
+    <span id="speed-span" style="display: none"></span>
+  </body>
+  <script type="text/javascript">
+    var speed = 0;
+    var topSpeed = 1000;
+    var p_counter;
+    var d_counter;
+    var accDown = false;
+    var breakDown = false;
+    var speed_span = document.getElementById("speed-span");
+    var center_label = document.getElementById("center-label");
+    var right_label = document.getElementById("right-label");
+    var pointer_line = document.getElementById("pointer-line");
+
+    function acceleratorDown() {
+      accDown = true;
+      p_counter = setInterval(function() {
+        speed += 0.2 - 0.2*(speed / topSpeed);
+        speed = Math.min(speed, topSpeed);
+      }, 10);
+    }
+    function brakeDown() {
+      breakDown = true;
+      p_counter = setInterval(function() {
+        speed -= 0.2;
+        speed = Math.max(speed, 0);
+      }, 10);
+    }
+
+    d_counter = window.setInterval(function() {
+      if (!(accDown || breakDown)) {
+        speed *= 0.998;
+        speed -= 0.01;
+        speed = Math.max(speed, 0);
+      }
+      speed_span.innerHTML = Math.floor(speed);
+      if (speed < 20) {
+        pointer_line.style.transform = 'rotate('+(1.8*speed)+'deg)';
+      } else {
+        right_label.innerHTML =  Math.floor(speed * 5);
+        center_label.innerHTML =  Math.floor(speed * 2.5);
+      }
+    }, 10);
+
+    window.addEventListener('mouseup', function(event){
+      clearInterval(p_counter);
+      breakDown = false;
+      accDown = false;
+    })
+  </script>
+</html>
